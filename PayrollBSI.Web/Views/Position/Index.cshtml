@@ -1,0 +1,102 @@
+﻿@model IEnumerable<PayrollBSI.BLL.DTO.PositionDTO>
+
+@{
+	ViewData["Title"] = "Position Index";
+}
+
+<h1 class="mb-4">Position Page</h1>
+
+@if (TempData["Message"] != null)
+{
+	@Html.Raw(TempData["Message"])
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+	<div class="alert alert-danger">
+		@Html.Raw(ViewBag.ErrorMessage)
+	</div>
+}
+
+<div class="card shadow mb-4">
+	<div class="card-header py-3">
+		<h6 class="m-0 font-weight-bold text-primary">Position List</h6>
+	</div>
+	<div class="card-body">
+		<a class="btn btn-success mb-4" asp-controller="Position" asp-action="Create">Create New</a>
+		<table class="table table-bordered table-responsive" id="dataTable" width="100%" cellspacing="0">
+			<thead>
+				<tr>
+					<th>No</th>
+					<th style="display:none;">PositionID</th>
+					<th>Position Name</th>
+					<th>Allowance Meal</th>
+					<th>Allowance Transport</th>
+					<th>Deduction Pension</th>
+					<th>Deduction Insurance</th>
+					<th>Payrate Overtime</th>
+					<th>Payrate Regular</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model.Where(p => p.IsActive == 1 && p.IsDeleted == 0).Select((data, index) => new { data, index }))
+				{
+					<tr id="row_@item.data.PositionID">
+						<td>@(item.index + 1)</td>
+						<td style="display:none;">@item.data.PositionID</td>
+						<td>@item.data.PositionName</td>
+						<td>@item.data.AllowanceMeal</td>
+						<td>@item.data.AllowanceTransport</td>
+						<td>@item.data.DeductionPension</td>
+						<td>@item.data.DeductionInsurance</td>
+						<td>@item.data.PayrateOvertime</td>
+						<td>@item.data.PayrateRegular</td>
+						<td>
+							<a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal_@item.data.PositionID">Edit</a>
+							<form method="post" id="deleteForm_@item.data.PositionID">
+								<input type="hidden" name="id" value="@item.data.PositionID" />
+								<button type="button" class="btn btn-danger btn-sm" onclick="deletePosition('@item.data.PositionID')">Delete</button>
+							</form>
+						</td>
+					</tr>
+				}
+			</tbody>
+
+
+
+
+		</table>
+	</div>
+
+	<script>
+		function deletePosition(positionId) {
+			// Konfirmasi penghapusan
+			if (confirm('Are you sure you want to delete this position?')) {
+				// Pesan debugging
+				console.log('Deleting position with ID:', positionId);
+
+				// Mendapatkan form
+				var formData = $('#deleteForm_' + positionId).serialize();
+
+				// Mengirimkan permintaan AJAX untuk penghapusan
+				$.ajax({
+					type: 'POST',
+					url: '/Position/Delete/' + positionId,
+					data: formData,
+					success: function (response) {
+						// Menghapus baris dari tampilan setelah berhasil dihapus
+						$('#row_' + positionId).remove();
+						alert('Position deleted successfully.');
+					},
+					error: function () {
+						alert('Error occurred while deleting position.');
+					}
+				});
+			}
+		}
+
+	</script>
+</div>
+
+

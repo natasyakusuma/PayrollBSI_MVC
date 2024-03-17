@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Startbootstrap\js\core\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\Startbootstrap\js\core\bootstrap.min.js" />
+    <None Include="wwwroot\Startbootstrap\js\core\popper.min.js" />
+    <None Include="wwwroot\Startbootstrap\js\plugins\bootstrap-notify.js" />
+    <None Include="wwwroot\Startbootstrap\js\plugins\Chart.extension.js" />
+    <None Include="wwwroot\Startbootstrap\js\plugins\chartjs.min.js" />
+    <None Include="wwwroot\Startbootstrap\js\plugins\perfect-scrollbar.min.js" />
+    <None Include="wwwroot\Startbootstrap\js\plugins\smooth-scrollbar.min.js" />
+    <None Include="wwwroot\Startbootstrap\js\soft-ui-dashboard.js" />
+    <None Include="wwwroot\Startbootstrap\js\soft-ui-dashboard.js.map" />
+    <None Include="wwwroot\Startbootstrap\js\soft-ui-dashboard.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="31.0.2" />
+    <PackageReference Include="Dapper" Version="2.1.35" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PayrollBSI.BLL\PayrollBSI.BLL.csproj" />
+    <ProjectReference Include="..\PayrollBSI.BO\PayrollBSI.BO.csproj" />
+    <ProjectReference Include="..\PayrollBSI.DAL\PayrollBSI.DAL.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,48 @@
+﻿@model PayrollBSI.BLL.DTO.PositionDTO
+
+<div class="modal fade" id="editModal@(Model.PositionID)" tabindex="-1" role="dialog" aria-labelledby="editModalLabel@(Model.PositionID)" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel@(Model.PositionID)">Edit Position</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Form for editing position -->
+                <form asp-controller="Position" asp-action="Edit" asp-route-id="@Model.PositionID" method="post">
+                    <div class="form-group">
+                        <label for="editPositionName">Position Name</label>
+                        <input type="text" class="form-control" id="editPositionName" name="PositionName" value="@Model.PositionName">
+                    </div>
+                    <div class="form-group">
+                        <label for="editAllowanceMeal">Allowance Meal</label>
+                        <input type="text" class="form-control" id="editAllowanceMeal" name="AllowanceMeal" value="@Model.AllowanceMeal">
+                    </div>
+                    <div class="form-group">
+                        <label for="editAllowanceTransport">Allowance Transport</label>
+                        <input type="text" class="form-control" id="editAllowanceTransport" name="AllowanceTransport" value="@Model.AllowanceTransport">
+                    </div>
+                    <div class="form-group">
+                        <label for="editDeductionPension">Deduction Pension</label>
+                        <input type="text" class="form-control" id="editDeductionPension" name="DeductionPension" value="@Model.DeductionPension">
+                    </div>
+                    <div class="form-group">
+                        <label for="editDeductionInsurance">Deduction Insurance</label>
+                        <input type="text" class="form-control" id="editDeductionInsurance" name="DeductionInsurance" value="@Model.DeductionInsurance">
+                    </div>
+                    <div class="form-group">
+                        <label for="editPayrateOvertime">Payrate Overtime</label>
+                        <input type="text" class="form-control" id="editPayrateOvertime" name="PayrateOvertime" value="@Model.PayrateOvertime">
+                    </div>
+                    <div class="form-group">
+                        <label for="editPayrateRegular">Payrate Regular</label>
+                        <input type="text" class="form-control" id="editPayrateRegular" name="PayrateRegular" value="@Model.PayrateRegular">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
