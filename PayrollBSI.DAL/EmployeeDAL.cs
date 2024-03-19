@@ -57,7 +57,7 @@ namespace PayrollBSI.DAL
 					conn.Open(); // Open the connection
 
 					// Define the stored procedure name
-					string storedProcedureName = "dbo.GetEmployeesWithRoleAndPosition";
+					string storedProcedureName = "dbo.GetEmployeesDetail";
 
 					// Execute the stored procedure and store the result
 					var result = conn.Query<EmployeeBO>(storedProcedureName, commandType: System.Data.CommandType.StoredProcedure);
@@ -82,5 +82,30 @@ namespace PayrollBSI.DAL
 		{
 			throw new NotImplementedException();
 		}
+
+		public EmployeeBO Login(string username, string password)
+		{
+			using (SqlConnection conn = new SqlConnection(GetConnectionString()))
+			{
+				var strSql = "SELECT * FROM Employee WHERE Username = @Username AND Password = @Password";
+				var param = new { Username = username, Password = password };
+				try
+				{
+					var result = conn.QueryFirstOrDefault<EmployeeBO>(strSql, param);
+					if (result == null)
+					{
+						throw new Exception("Invalid username or password");
+					}
+					return result;
+				}
+				catch (Exception ex)
+				{
+					throw new Exception("Error occurred while logging in: " + ex.Message);
+				}
+			}
+		}
 	}
 }
+
+
+

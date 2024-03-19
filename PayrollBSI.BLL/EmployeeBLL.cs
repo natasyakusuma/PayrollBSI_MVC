@@ -7,6 +7,8 @@ using PayrollBSI.BLL.DTO;
 using PayrollBSI.BLL.InterfaceBLL;
 using PayrollBSI.DAL.InterfaceDAL;
 using PayrollBSI.DAL;
+using AutoMapper;
+
 
 namespace PayrollBSI.BLL
 {
@@ -72,6 +74,10 @@ namespace PayrollBSI.BLL
 					Username = employee.Username,
 					Password = employee.Password,
 					IsDeleted = employee.IsDeleted,
+					AttendanceID = employee.AttendanceID,
+					OvertimeHours = employee.OvertimeHours,
+					RegularHours = employee.RegularHours,
+					AttendanceTotal = employee.AttendanceTotal,
 					Roles = employee.Roles != null ? new RoleDTO
 					{
 						RoleID = employee.Roles.RoleID,
@@ -81,7 +87,14 @@ namespace PayrollBSI.BLL
 					{
 						PositionID = employee.Position.PositionID,
 						PositionName = employee.Position.PositionName
-					} : null // Null handling for Position property
+					} : null,// Null handling for Position property
+					Attendance = employee.Attendances != null ? new AttendanceDTO
+					{
+                        AttendanceID = employee.Attendances.AttendanceID,
+                        OvertimeHours = employee.Attendances.OvertimeHours,
+                        RegularHours = employee.Attendances.RegularHours,
+                        AttendanceTotal = employee.Attendances.AttendanceTotal
+                    } : null // Null handling for Attendance property
 				};
 
 				listEmployeeDto.Add(employeeDto);
@@ -90,13 +103,42 @@ namespace PayrollBSI.BLL
 			return listEmployeeDto;
 		}
 
+        public void Insert(EmployeeDTO obj)
+        {
+            throw new NotImplementedException();
+        }
 
-
-
-		public void Insert(EmployeeDTO obj)
+        public EmployeeDTO Login(string username, string password)
 		{
-			throw new NotImplementedException();
+			try
+			{
+				var employeeBO = _employeeDAL.Login(username, password);
+				if (employeeBO == null)
+				{
+					throw new Exception("Invalid username or password");
+				}
+
+				var employeeDTO = new EmployeeDTO
+				{
+					EmployeeID = employeeBO.EmployeeID,
+					FirstName = employeeBO.FirstName,
+					LastName = employeeBO.LastName,
+					RoleID = employeeBO.RoleID,
+					PositionID = employeeBO.PositionID,
+					Username = employeeBO.Username,
+					Password = employeeBO.Password,
+					IsDeleted = employeeBO.IsDeleted
+				};
+
+				return employeeDTO;
+			}
+			catch (Exception ex)
+			{
+				// Handle exception appropriately, such as logging it
+				throw new Exception("Error occurred during login: " + ex.Message);
+			}
 		}
+
 
 		public void Update(EmployeeDTO obj)
 		{

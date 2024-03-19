@@ -117,6 +117,7 @@ namespace PayrollBSI.DAL
 			using (SqlConnection conn = new SqlConnection(GetConnectionString()))
 			{
 				var strsql = "UPDATE Position SET PositionName = @PositionName, AllowanceMeal = @AllowanceMeal, AllowanceTransport = @AllowanceTransport, DeductionPension = @DeductionPension, DeductionInsurance = @DeductionInsurance, PayrateOvertime = @PayrateOvertime, PayrateRegular = @PayrateRegular WHERE PositionID = @PositionID";
+				//var strsql = "UpdatePositionAndPayrollDetails";
 				var param = new
 				{
 					PositionID = obj.PositionID,
@@ -131,6 +132,7 @@ namespace PayrollBSI.DAL
 
 				try
 				{
+
 					int result = conn.Execute(strsql, param);
 					if (result != 1)
 					{

@@ -15,8 +15,12 @@ namespace PayrollBSI.BO
 		public string? Username { get; set; }
 		public string? Password { get; set; }
 		public int IsDeleted { get; set; }
-
+		public  int AttendanceID { get; set; }
+		public decimal OvertimeHours { get; set; }
+		public decimal RegularHours { get; set; }
+		public int AttendanceTotal { get; set; }
 		public PositionBO? Position { get; set; }
 		public RolesBO? Roles { get; set; }
+		public AttendanceBO? Attendances { get; set; }
 	}
 }

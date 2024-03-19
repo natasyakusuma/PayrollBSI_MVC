@@ -7,11 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PayrollBSI.BO\PayrollBSI.BO.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="InterfaceDAL\NewFolder\" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,53 @@
+﻿@model PayrollBSI.Web.ViewModelsCreatePayroll
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Payroll Details</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="card mt-5">
+            <div class="card-header">
+                <h1 class="card-title">Create Payroll Details</h1>
+            </div>
+            <div class="card-body">
+                <form action="/PayrollDetails/Create" method="post">
+                    <div class="form-group">
+                        <label for="employeeId">Employee:</label>
+                        <select id="EmployeeID" name="EmployeeID" class="form-control">
+                            <option value="">Select an Employee</option>
+                            <!-- Populate dropdown with employee names from model -->
+                            @foreach (var employee in Model.Employee)
+                            {
+                                
+                                <option value="@employee.Value">@employee.Text</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="attendanceId">Attendance ID:</label>
+                        <select id="AttendanceID" name="AttendanceID" class="form-control">
+                            <option value="">Select an Attendance ID</option>
+                            <!-- Populate dropdown with all attendance data from model -->
+                            @foreach (var attendance in Model.Attendance)
+                            {
+                                <option value="@attendance.Value">@attendance.Text</option>
+                            }
+                        </select>
+                    </div>
+                    <!-- New label and input field for payroll date -->
+                    <div class="form-group">
+                        <label for="payrollDate">Payroll Date:</label>
+                        <input type="text" id="payrollDate" name="payrollDate" value="@ViewBag.PayrollDate" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

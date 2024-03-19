@@ -9,8 +9,13 @@ namespace PayrollBSI.Web.Controllers
         //Home/Index
         public IActionResult Index()
         {
-            ViewData["Title"] = "Home Page";
+            if (HttpContext.Session.GetString("Employee") == null)
+            {
+                return RedirectToAction("Login", "Employee");
+            }
+
             return View();
+
         }
     }
 }

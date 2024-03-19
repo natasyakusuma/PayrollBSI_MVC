@@ -1,73 +1,205 @@
 ﻿@model IEnumerable<PayrollBSI.BLL.DTO.PositionDTO>
 
-@{
-	ViewData["Title"] = "Position Index";
-}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Position List</title>
+	<!-- Bootstrap CSS -->
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		/* Custom CSS untuk table */
+		.table-responsive {
+			overflow-x: auto;
+		}
 
-<h1 class="mb-4">Position Page</h1>
+		.card {
+			margin: 20px auto;
+			border-radius: 10px;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		}
 
-@if (TempData["Message"] != null)
-{
-	@Html.Raw(TempData["Message"])
-}
+		.card-header {
+			background-color: #004bc6;
+			color: #fff;
+			padding: 15px;
+			border-top-left-radius: 10px;
+			border-top-right-radius: 10px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
 
-@if (ViewBag.ErrorMessage != null)
-{
-	<div class="alert alert-danger">
-		@Html.Raw(ViewBag.ErrorMessage)
+		.card-body table {
+			width: 100%;
+		}
+
+		.card-body th,
+		.card-body td {
+			padding: 10px;
+			vertical-align: middle;
+			font-size: 16px;
+		}
+
+		.card-body th {
+			background-color: #f8f9fa;
+			color: #000;
+			font-weight: bold;
+			font-size: 18px;
+		}
+
+
+
+		.card-footer {
+			text-align: right;
+			padding: 15px;
+			border-bottom-left-radius: 10px;
+			border-bottom-right-radius: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="container-fluid">
+		<h1 class="mt-4 mb-4">Position Page</h1>
+
+		@if (TempData["Message"] != null)
+		{
+			<div class="alert alert-success">
+				@Html.Raw(TempData["Message"])
+			</div>
+		}
+
+		@if (ViewBag.ErrorMessage != null)
+		{
+			<div class="alert alert-danger">
+				@Html.Raw(ViewBag.ErrorMessage)
+			</div>
+		}
+
+		<div class="card shadow mb-4">
+			<div class="card-header d-flex align-content-between">
+				<div class="row">
+					<div class="col-sm-6">
+						<h5 class="m-0 font-weight-bold">Employee List</h5>
+					</div>
+					<div class="col-sm-6">
+						<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+							<div class="input-group">
+								<input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+									   aria-label="Search" aria-describedby="basic-addon2">
+								<div class="input-group-append">
+									<button class="btn btn-primary" type="button">
+										<i class="fas fa-search fa-sm"></i>
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="card-body">
+				<a class="btn btn-success mb-4" asp-controller="Position" asp-action="Create">Create New</a>
+				<div class="table-responsive">
+					<table class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th>No</th>
+								<th style="display:none;">PositionID</th>
+								<th>Position Name</th>
+								<th>Allowance Meal</th>
+								<th>Allowance Transport</th>
+								<th>Deduction Pension</th>
+								<th>Deduction Insurance</th>
+								<th>Payrate Overtime</th>
+								<th>Payrate Regular</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var item in Model.Where(p => p.IsActive == 1 && p.IsDeleted == 0).Select((data, index) => new { data, index }))
+							{
+								<tr id="row_@item.data.PositionID">
+									<td>@(item.index + 1)</td>
+									<td style="display:none;">@item.data.PositionID</td>
+									<td>@item.data.PositionName</td>
+									<td>@item.data.AllowanceMeal</td>
+									<td>@item.data.AllowanceTransport</td>
+									<td>@item.data.DeductionPension</td>
+									<td>@item.data.DeductionInsurance</td>
+									<td>@item.data.PayrateOvertime</td>
+									<td>@item.data.PayrateRegular</td>
+									<td>
+										<a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal_@item.data.PositionID">Edit</a>
+										<form method="post" id="deleteForm_@item.data.PositionID">
+											<input type="hidden" name="id" value="@item.data.PositionID" />
+											<button type="button" class="btn btn-danger btn-sm" onclick="deletePosition('@item.data.PositionID')">Delete</button>
+										</form>
+									</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
 	</div>
-}
 
-<div class="card shadow mb-4">
-	<div class="card-header py-3">
-		<h6 class="m-0 font-weight-bold text-primary">Position List</h6>
-	</div>
-	<div class="card-body">
-		<a class="btn btn-success mb-4" asp-controller="Position" asp-action="Create">Create New</a>
-		<table class="table table-bordered table-responsive" id="dataTable" width="100%" cellspacing="0">
-			<thead>
-				<tr>
-					<th>No</th>
-					<th style="display:none;">PositionID</th>
-					<th>Position Name</th>
-					<th>Allowance Meal</th>
-					<th>Allowance Transport</th>
-					<th>Deduction Pension</th>
-					<th>Deduction Insurance</th>
-					<th>Payrate Overtime</th>
-					<th>Payrate Regular</th>
-					<th>Action</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (var item in Model.Where(p => p.IsActive == 1 && p.IsDeleted == 0).Select((data, index) => new { data, index }))
-				{
-					<tr id="row_@item.data.PositionID">
-						<td>@(item.index + 1)</td>
-						<td style="display:none;">@item.data.PositionID</td>
-						<td>@item.data.PositionName</td>
-						<td>@item.data.AllowanceMeal</td>
-						<td>@item.data.AllowanceTransport</td>
-						<td>@item.data.DeductionPension</td>
-						<td>@item.data.DeductionInsurance</td>
-						<td>@item.data.PayrateOvertime</td>
-						<td>@item.data.PayrateRegular</td>
-						<td>
-							<a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#editModal_@item.data.PositionID">Edit</a>
-							<form method="post" id="deleteForm_@item.data.PositionID">
-								<input type="hidden" name="id" value="@item.data.PositionID" />
-								<button type="button" class="btn btn-danger btn-sm" onclick="deletePosition('@item.data.PositionID')">Delete</button>
-							</form>
-						</td>
-					</tr>
-				}
-			</tbody>
+	<!-- Modal for each PositionDTO -->
+	@foreach (var item in Model.Where(p => p.IsActive == 1 && p.IsDeleted == 0))
+	{
+		<div class="modal fade" id="editModal_@(item.PositionID)" tabindex="-1" role="dialog" aria-labelledby="editModalLabel_@(item.PositionID)" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="editModalLabel_@(item.PositionID)">Edit Position</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<!-- Form for editing position -->
+						<form asp-controller="Position" asp-action="Edit" asp-route-id="@item.PositionID" method="post">
+							<input type="text" class="form-control" id="editPositionId" name="PositionID" value="@item.PositionID" hidden />
+							<div class="form-group">
+								<label for="editPositionName">Position Name</label>
+								<input type="text" class="form-control" id="editPositionName" name="PositionName" value="@item.PositionName">
+							</div>
+							<div class="form-group">
+								<label for="editAllowanceMeal">Allowance Meal</label>
+								<input type="text" class="form-control" id="editAllowanceMeal" name="AllowanceMeal" value="@item.AllowanceMeal">
+							</div>
+							<div class="form-group">
+								<label for="editAllowanceTransport">Allowance Transport</label>
+								<input type="text" class="form-control" id="editAllowanceTransport" name="AllowanceTransport" value="@item.AllowanceTransport">
+							</div>
+							<div class="form-group">
+								<label for="editDeductionPension">Deduction Pension</label>
+								<input type="text" class="form-control" id="editDeductionPension" name="DeductionPension" value="@item.DeductionPension">
+							</div>
+							<div class="form-group">
+								<label for="editDeductionInsurance">Deduction Insurance</label>
+								<input type="text" class="form-control" id="editDeductionInsurance" name="DeductionInsurance" value="@item.DeductionInsurance">
+							</div>
+							<div class="form-group">
+								<label for="editPayrateOvertime">Payrate Overtime</label>
+								<input type="text" class="form-control" id="editPayrateOvertime" name="PayrateOvertime" value="@item.PayrateOvertime">
+							</div>
+							<div class="form-group">
+								<label for="editPayrateRegular">Payrate Regular</label>
+								<input type="text" class="form-control" id="editPayrateRegular" name="PayrateRegular" value="@item.PayrateRegular">
+							</div>
+							<button type="submit" class="btn btn-primary">Save Changes</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
 
+	<!-- Bootstrap JS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-
-
-		</table>
-	</div>
 
 	<script>
 		function deletePosition(positionId) {
@@ -95,8 +227,6 @@
 				});
 			}
 		}
-
 	</script>
-</div>
-
-
+</body>
+</html>

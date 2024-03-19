@@ -14,7 +14,7 @@ namespace PayrollBSI.BO
 		public decimal RegularHours { get; set; }
 		public int AttendanceTotal { get; set; }
 
-		public IEnumerable<EmployeeBO> Employees { get; set; }
+		public EmployeeBO? Employees { get; set; }
 	}
 
 }

@@ -17,7 +17,12 @@ namespace PayrollBSI.Web.Controllers
 
 		public IActionResult Index()
 		{
-			try
+            if (HttpContext.Session.GetString("Employee") == null)
+            {
+                return RedirectToAction("Login", "Employee");
+            }
+
+            try
 			{
 				var positions = _positionBLL.GetAllActivePositions(); // Mengambil hanya posisi yang aktif
 				return View(positions);
@@ -79,7 +84,7 @@ namespace PayrollBSI.Web.Controllers
 		public IActionResult Edit(int id)
 		{
 			var model = _positionBLL.GetById(id);
-			return PartialView("_Edit", model);
+			return View();
 		}
 
 

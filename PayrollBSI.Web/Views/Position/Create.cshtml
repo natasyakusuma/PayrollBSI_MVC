@@ -22,45 +22,62 @@
         }
 
         <form asp-action="Create" asp-controller="Position" method="post">
-            <div class="form-group">
-                <label asp-for="PositionName" class="col-form-label">Position Name</label>
-                <input asp-for="PositionName" class="form-control" />
-                <span asp-validation-for="PositionName" class="text-danger"></span>
+            <div class="form-group row">
+                <label for="PositionName" class="col-sm-3 col-form-label">Position Name</label>
+                <div class="col-sm-9">
+                    <input asp-for="PositionName" class="form-control" />
+                    <span asp-validation-for="PositionName" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="AllowanceMeal" class="col-form-label">Allowance Meal</label>
-                <input asp-for="AllowanceMeal" class="form-control" />
-                <span asp-validation-for="AllowanceMeal" class="text-danger"></span>
+            <div class="form-group row">
+                <label for="AllowanceMeal" class="col-sm-3 col-form-label">Allowance Meal</label>
+                <div class="col-sm-9">
+                    <input asp-for="AllowanceMeal" class="form-control" />
+                    <span asp-validation-for="AllowanceMeal" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="AllowanceTransport" class="col-form-label">Allowance Transport</label>
-                <input asp-for="AllowanceTransport" class="form-control" />
-                <span asp-validation-for="AllowanceTransport" class="text-danger"></span>
+            <div class="form-group row">
+                <label for="AllowanceTransport" class="col-sm-3 col-form-label">Allowance Transport</label>
+                <div class="col-sm-9">
+                    <input asp-for="AllowanceTransport" class="form-control" />
+                    <span asp-validation-for="AllowanceTransport" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="DeductionPension" class="col-form-label">Deduction Pension</label>
-                <input asp-for="DeductionPension" class="form-control" />
-                <span asp-validation-for="DeductionPension" class="text-danger"></span>
+            <div class="form-group row">
+                <label for="DeductionPension" class="col-sm-3 col-form-label">Deduction Pension</label>
+                <div class="col-sm-9">
+                    <input asp-for="DeductionPension" class="form-control" />
+                    <span asp-validation-for="DeductionPension" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="DeductionInsurance" class="col-form-label">Deduction Insurance</label>
-                <input asp-for="DeductionInsurance" class="form-control" />
-                <span asp-validation-for="DeductionInsurance" class="text-danger"></span>
+            <div class="form-group row">
+                <label for="DeductionInsurance" class="col-sm-3 col-form-label">Deduction Insurance</label>
+                <div class="col-sm-9">
+                    <input asp-for="DeductionInsurance" class="form-control" />
+                    <span asp-validation-for="DeductionInsurance" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="PayrateOvertime" class="col-form-label">Payrate Overtime</label>
-                <input asp-for="PayrateOvertime" class="form-control" />
-                <span asp-validation-for="PayrateOvertime" class="text-danger"></span>
+            <div class="form-group row">
+                <label for="PayrateOvertime" class="col-sm-3 col-form-label">Payrate Overtime</label>
+                <div class="col-sm-9">
+                    <input asp-for="PayrateOvertime" class="form-control" />
+                    <span asp-validation-for="PayrateOvertime" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="PayrateRegular" class="col-form-label">Payrate Regular</label>
-                <input asp-for="PayrateRegular" class="form-control" />
-                <span asp-validation-for="PayrateRegular" class="text-danger"></span>
+            <div class="form-group row">
+                <label for="PayrateRegular" class="col-sm-3 col-form-label">Payrate Regular</label>
+                <div class="col-sm-9">
+                    <input asp-for="PayrateRegular" class="form-control" />
+                    <span asp-validation-for="PayrateRegular" class="text-danger"></span>
+                </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Create</button>
-            <a href="@Url.Action("Index", "Position")" class="btn btn-secondary">Back to Index</a>
+            <div class="form-group row">
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                    <a href="@Url.Action("Index", "Position")" class="btn btn-secondary">Back to Index</a>
+                </div>
+            </div>
         </form>
     </div>
-
 </div>

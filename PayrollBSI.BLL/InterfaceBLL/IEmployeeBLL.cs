@@ -16,5 +16,7 @@ namespace PayrollBSI.BLL.InterfaceBLL
 		PositionDTO GetById(int id);
 		IEnumerable<EmployeeDTO> GetWithRoleNameAndPositionName();
 		IEnumerable<EmployeeDTO> GetByRoleNameAndPositionName(int id);
+
+		EmployeeDTO Login(string username, string password);
 	}
 }

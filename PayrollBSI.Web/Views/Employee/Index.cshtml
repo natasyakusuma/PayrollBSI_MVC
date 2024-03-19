@@ -3,46 +3,126 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Employee List</title>
+	<title>Employee List</title>
+	<!-- Bootstrap CSS -->
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		.card {
+			margin: 20px auto;
+			border-radius: 10px;
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		}
+
+		.card-header {
+			background-color: #004bc6;
+			color: #fff;
+			padding: 15px;
+			border-top-left-radius: 10px;
+			border-top-right-radius: 10px;
+			display: flex;
+			justify-content: space-between; /* Align items horizontally */
+			align-items: center; /* Align items vertically */
+		}
+
+		.card-body table {
+			width: 100%;
+		}
+
+		.card-body th,
+		.card-body td {
+			padding: 10px;
+			vertical-align: middle;
+			font-size: 16px; /* Set font size for td elements */
+		}
+
+		.card-body th {
+			background-color: #f8f9fa;
+			color: #000;
+			font-weight: bold;
+			font-size: 18px; /* Set font size for th elements */
+		}
+
+		.card-body td:first-child {
+			display: none;
+		}
+
+		.card-footer {
+			text-align: right;
+			padding: 15px;
+			border-bottom-left-radius: 10px;
+			border-bottom-right-radius: 10px;
+		}
+	</style>
 </head>
 <body>
-    <h1>Employee List</h1>
+	<div class="container">
+		<div class="card">
+			<div class="card-header">
+				<div class="row">
+					<div class="col-sm-6">
+						<h5 class="m-0 font-weight-bold">Employee List</h5>
+					</div>
+					<div class="col-sm-6">
+						<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+							<div class="input-group">
+								<input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+									   aria-label="Search" aria-describedby="basic-addon2">
+								<div class="input-group-append">
+									<button class="btn btn-primary" type="button">
+										<i class="fas fa-search fa-sm"></i>
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
 
-    @if (Model != null && Model.Any())
-    {
-        <table border="1">
-            <tr>
-                <th>Employee ID</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Role ID</th>
-                <th>Role Name</th>
-                <th>Position ID</th>
-                <th>Position Name</th>
-                <th>Username</th>
-                <th>Password</th>
-                <th>Is Deleted</th>
-            </tr>
-            @foreach (var employee in Model)
-            {
-                <tr>
-                    <td>@employee.EmployeeID</td>
-                    <td>@employee.FirstName</td>
-                    <td>@employee.LastName</td>
-                    <td>@employee.RoleID</td>
-                    <td>@(employee.RoleName)</td>
-                    <td>@employee.PositionID</td>
-                    <td>@(employee.PositionName)</td>
-                    <td>@employee.Username</td>
-                    <td>@employee.Password</td>
-                    <td>@employee.IsDeleted</td>
-                </tr>
-            }
-        </table>
-    }
-    else
-    {
-        <p>No employees found.</p>
-    }
+			<div class="card-body card-responsive">
+				<a href="@Url.Action("Index", "PayrollDetails")" class="btn btn-info btn-sm">Details</a>
+
+				@if (Model != null && Model.Any())
+				{
+					<table class="table table-bordered table-responsive">
+						<thead>
+							<tr>
+								<th style="display:none">Employee ID</th>
+								<th>No.</th> <!-- Add table number column -->
+								<th>First Name</th>
+								<th>Last Name</th>
+								<th>Role Name</th>
+								<th>Position Name</th>
+								<th>Regular Hours</th>
+								<th>Overtime Hours</th>
+								<th>Attendance Total</th>
+
+							</tr>
+						</thead>
+						<tbody>
+							@foreach (var employee in Model.Select((data, index) => new { data, index }))
+							{
+								<tr>
+									<td style="display:none">@employee.data.EmployeeID</td>
+									<td>@(employee.index + 1)</td> <!-- Auto-incrementing table number -->
+									<td>@employee.data.FirstName</td>
+									<td>@employee.data.LastName</td>
+									<td>@(employee.data.RoleName)</td>
+									<td>@(employee.data.PositionName)</td>
+									<td>@employee.data.RegularHours</td>
+									<td>@employee.data.OvertimeHours</td>
+									<td>@employee.data.AttendanceTotal</td>
+
+								</tr>
+							}
+						</tbody>
+					</table>
+				}
+				else
+				{
+					<p>No employees found.</p>
+				}
+			</div>
+		</div>
+	</div>
 </body>
 </html>
