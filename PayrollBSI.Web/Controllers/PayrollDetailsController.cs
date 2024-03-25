@@ -23,7 +23,7 @@ public class PayrollDetailsController : Controller
 	// Other actions...
 
 	// GET: PayrollDetails/Index/{employeeId}
-	public IActionResult Index()
+	public IActionResult Index(int id)
 	{
 		var model = _payrollDetailsBLL.GetAll();
 		return View(model);
@@ -32,7 +32,7 @@ public class PayrollDetailsController : Controller
 	public IActionResult Create()
 	{
 		var employees = _employeeBLL.GetAll();
-		var attendance = _attendanceBLL.GetAll();
+		var attendance = _attendanceBLL.GetAll(); // ini nanti pakai yg get attendance by  employee id 
 		var createDTO = new PayrollDetailsCreateDTO();
 		createDTO = null;
 		var model = new ViewModelsCreatePayroll
