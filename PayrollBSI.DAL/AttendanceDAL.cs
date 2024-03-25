@@ -21,12 +21,12 @@ namespace PayrollBSI.DAL
             throw new NotImplementedException();
         }
 
-        public IEnumerable<AttendanceBO> GetAll()
+        public IEnumerable<AttendanceBO> GetAll() //tambahin parameter disini
         {
             using (SqlConnection conn = new SqlConnection(GetConnectionString()))
             {
                 var strSql = @"SELECT AttendanceID, EmployeeID, OvertimeHours, RegularHours, AttendanceTotal
-                        FROM Attendance";
+                        FROM Attendance  WHERE EmployeeID = @employeeid "; // nambahin paramter disini untuk make sure yang keluar cuma satu orang itu saja
                 try
                 {
                     var result = conn.Query<AttendanceBO>(strSql);
@@ -46,7 +46,7 @@ namespace PayrollBSI.DAL
             {
                 var strSql = @"SELECT AttendanceID, EmployeeID, OvertimeHours, RegularHours, AttendanceTotal
                         FROM Attendance
-                        WHERE EmployeeID = @EmployeeID";
+                        WHERE EmployeeID = @employeeID";
                 try
                 {
                     var result = conn.QueryFirstOrDefault<AttendanceBO>(strSql, new { EmployeeID = employeeID });

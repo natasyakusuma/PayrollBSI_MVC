@@ -1,0 +1,6 @@
+@Payroll.APISolution_HostAddress = http://localhost:5216
+
+GET {{Payroll.APISolution_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
